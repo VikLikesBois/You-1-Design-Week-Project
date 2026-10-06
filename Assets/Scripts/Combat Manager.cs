@@ -44,6 +44,7 @@ public class CombatManager : MonoBehaviour
 
     private void Update()
     {
+
         Timer();
         Combat();
         WinCheck();
@@ -140,7 +141,7 @@ public class CombatManager : MonoBehaviour
         {
             timeLeft = 0;
   
-             timerTextTest.SetActive(false);
+           //  timerTextTest.SetActive(false);
 
 
             //player 1 lose
@@ -219,7 +220,8 @@ public class CombatManager : MonoBehaviour
         {
             timerOn = true;
             gameStart = true;
-            
+            TimerText.enabled = true;
+
         }
 
 
