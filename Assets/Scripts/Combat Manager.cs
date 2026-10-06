@@ -12,6 +12,15 @@ public class CombatManager : MonoBehaviour
     public GameObject timerTextTest;
     public TextMeshProUGUI Player1TimeUI;
     public TextMeshProUGUI Player2TimeUI;
+    public TextMeshProUGUI roundTextTest;
+    public TextMeshProUGUI player1HealthText;
+    public TextMeshProUGUI player2HealthText;
+
+    public GameObject roundText;
+
+    bool gameStart = false;
+
+    bool test;
 
     //combat stuff
     bool player1Pressed;
@@ -19,12 +28,18 @@ public class CombatManager : MonoBehaviour
    public bool player1Missed = false;
    public bool player2Missed = false;
 
+    public int player1Health = 3;
+    public int player2Health = 3;
+    public int roundCount = 1;
+
     float player1Time;
     float player2Time;
 
     private void Start()
     {
-        timerOn = true;
+        
+       
+        
     }
 
     private void Update()
@@ -33,19 +48,53 @@ public class CombatManager : MonoBehaviour
         Combat();
         WinCheck();
         TimerHide();
+        HealthUpdate();
     }
+    void NextRound()
+    {
+        timerOn = false;
+        timeLeft = 3;
+
+        player1Missed = false;
+        player2Missed = false;
+        player1Pressed = false;
+        player2Pressed = false;
+
+        gameStart = false;
+        
+        TimerText.enabled = true;
+        
+    }
+
+    public void EndRound()
+    {
+
+        if (player1Health == 0)
+        {
+           
+        }
+        else if (player2Health == 0)
+        {
+           
+        }
+       
+    }
+
+
+    void HealthUpdate()
+    {
+        player1HealthText.text = ($"{player1Health}");
+        player2HealthText.text = ($"{player2Health}");
+    }
+
+
    void TimerHide()
     {
-        
-
+       
         if (timeLeft <= 1)
         {
             TimerText.enabled = false;
         }
-
-
-
-
 
     }
     
@@ -56,27 +105,32 @@ public class CombatManager : MonoBehaviour
     void Combat()
     {
         //punch controls for player 1
-       if (player1Pressed == false)
-       {
-            if (Input.GetKeyDown(KeyCode.A))
+     if (gameStart == true)
+        {
+            if (player1Pressed == false)
             {
-                player1Pressed = true;
-                player1Time = timeLeft;
-                
+                if (Input.GetKeyDown(KeyCode.A))
+                {
+                    player1Pressed = true;
+                    player1Time = timeLeft;
+
+                }
             }
-       }
-        //punch controls for player 2
-       if (player2Pressed == false)
-       {
-            if (Input.GetKeyDown(KeyCode.J))
+            //punch controls for player 2
+            if (player2Pressed == false)
             {
-                player2Pressed = true;
-                player2Time = timeLeft;
-                
+                if (Input.GetKeyDown(KeyCode.J))
+                {
+                    player2Pressed = true;
+                    player2Time = timeLeft;
+
+                }
             }
-       }
-       
+
+        }
     }
+        
+       
 
 
     void WinCheck()
@@ -88,13 +142,23 @@ public class CombatManager : MonoBehaviour
   
              timerTextTest.SetActive(false);
 
+
+            //player 1 lose
             if (player1Time > player2Time)
             {
-                Debug.Log("player 2 wins");
+                player1Health--;
+                roundTextTest.text = ($"Round {roundCount} Won by Player 2");
+                roundText.SetActive(true);
+                NextRound();
             }
+
+            //player 2 lose
             else if (player1Time < player2Time)
             {
-                Debug.Log("player 1 wins");
+                player2Health--;
+                roundTextTest.text = ($"Round {roundCount} Won by Player 1");
+                roundText.SetActive(true);
+                NextRound();
             }
         }
 
@@ -102,12 +166,18 @@ public class CombatManager : MonoBehaviour
         {
             if (player1Pressed == true && player2Pressed == false)
             {
-                Debug.Log("player 1 wins, player 2 missed");
+                player1Health--;
+                roundTextTest.text = ($"Round {roundCount} Won by Player 2");
+                roundText.SetActive(true);
+                NextRound();
             }
            
             if (player1Pressed == false && player2Pressed == true)
             {
-                Debug.Log("player 2 wins, player 1 missed");
+                player2Health--;
+                roundTextTest.text = ($"Round {roundCount} Won by Player 1");
+                roundText.SetActive(true);
+                NextRound();
             }
 
 
@@ -116,7 +186,8 @@ public class CombatManager : MonoBehaviour
 
             if (player1Pressed == false && player2Pressed == false)
             {
-                Debug.Log("stalemate");
+                roundTextTest.text = ($"Round Stalemate");
+                roundText.SetActive(true);
             }
         }
         
@@ -142,7 +213,19 @@ public class CombatManager : MonoBehaviour
 
     void Timer()
     {
+
+
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            timerOn = true;
+            gameStart = true;
+            
+        }
+
+
         //timer
+
+
         if (timerOn)
         {
             timeLeft -= Time.deltaTime;
