@@ -9,6 +9,7 @@ public class CombatManager : MonoBehaviour
     public float timeLeft;
     public bool timerOn = false;
     public TextMeshProUGUI TimerText;
+    public GameObject timerTextTest;
     public TextMeshProUGUI Player1TimeUI;
     public TextMeshProUGUI Player2TimeUI;
 
@@ -28,10 +29,30 @@ public class CombatManager : MonoBehaviour
 
     private void Update()
     {
-        timer();
+        Timer();
         Combat();
         WinCheck();
+        TimerHide();
     }
+   void TimerHide()
+    {
+        
+
+        if (timeLeft <= 1)
+        {
+            TimerText.enabled = false;
+        }
+
+
+
+
+
+    }
+    
+    
+    
+    
+    
     void Combat()
     {
         //punch controls for player 1
@@ -63,6 +84,10 @@ public class CombatManager : MonoBehaviour
      
         if (player1Pressed == true && player2Pressed == true)
         {
+            timeLeft = 0;
+  
+             timerTextTest.SetActive(false);
+
             if (player1Time > player2Time)
             {
                 Debug.Log("player 2 wins");
@@ -94,7 +119,7 @@ public class CombatManager : MonoBehaviour
        TimerText.text = string.Format("{0:0}.{1:0}", seconds, milliseconds);
     }
 
-    void timer()
+    void Timer()
     {
         //timer
         if (timerOn)
@@ -111,7 +136,7 @@ public class CombatManager : MonoBehaviour
         Player1TimeUI.text = player1Time.ToString(".00");
         Player2TimeUI.text = player2Time.ToString(".00");
 
-
+       
     }
 
 }

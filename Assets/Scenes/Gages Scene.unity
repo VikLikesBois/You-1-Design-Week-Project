@@ -506,6 +506,7 @@ MonoBehaviour:
   timeLeft: 3
   timerOn: 0
   TimerText: {fileID: 1834519120}
+  timerTextTest: {fileID: 1834519118}
   Player1TimeUI: {fileID: 949668324}
   Player2TimeUI: {fileID: 1377539899}
   player1Missed: 0
