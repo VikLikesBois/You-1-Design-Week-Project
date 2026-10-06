@@ -97,8 +97,29 @@ public class CombatManager : MonoBehaviour
                 Debug.Log("player 1 wins");
             }
         }
-       
 
+        if (timeLeft == 0)
+        {
+            if (player1Pressed == true && player2Pressed == false)
+            {
+                Debug.Log("player 1 wins, player 2 missed");
+            }
+           
+            if (player1Pressed == false && player2Pressed == true)
+            {
+                Debug.Log("player 2 wins, player 1 missed");
+            }
+
+
+
+
+
+            if (player1Pressed == false && player2Pressed == false)
+            {
+                Debug.Log("stalemate");
+            }
+        }
+        
        
 
         
