@@ -15,6 +15,7 @@ public class CombatManager : MonoBehaviour
     public TextMeshProUGUI roundTextTest;
     public TextMeshProUGUI player1HealthText;
     public TextMeshProUGUI player2HealthText;
+    public GameObject pressStart;
 
     public GameObject roundText;
 
@@ -60,7 +61,7 @@ public class CombatManager : MonoBehaviour
         player2Missed = false;
         player1Pressed = false;
         player2Pressed = false;
-
+        pressStart.SetActive(true);
         gameStart = false;
         
         TimerText.enabled = true;
@@ -221,6 +222,7 @@ public class CombatManager : MonoBehaviour
             timerOn = true;
             gameStart = true;
             TimerText.enabled = true;
+            pressStart.SetActive(false);
 
         }
 
