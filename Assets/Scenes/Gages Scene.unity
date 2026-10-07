@@ -914,7 +914,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8142700df7fdfb548b2a7fcd44cbc6d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeLeft: 6
+  invisableTimer: 5
+  visableTimer: 3
   timerOn: 0
   TimerText: {fileID: 1834519120}
   timerTextTest: {fileID: 1834519118}

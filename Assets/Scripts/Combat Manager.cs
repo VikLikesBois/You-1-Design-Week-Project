@@ -7,7 +7,8 @@ using UnityEngine.UIElements;
 public class CombatManager : MonoBehaviour
 {
     //timer stuff
-    public float timeLeft;
+    public float invisableTimer;
+    public float visableTimer;
     public bool timerOn = false;
     public TextMeshProUGUI TimerText;
     public GameObject timerTextTest;
@@ -26,7 +27,7 @@ public class CombatManager : MonoBehaviour
 
     bool gameStart = false;
 
-    bool test;
+    
 
     //combat stuff
     bool player1Pressed;
@@ -70,7 +71,7 @@ public class CombatManager : MonoBehaviour
         player1Pressed = false;
         player2Pressed = false;
         TimerText.enabled = true;
-        timeLeft = 6;
+        invisableTimer = 6;
 
         PlayerWonMatchRemove.SetActive(false);
         
@@ -78,7 +79,7 @@ public class CombatManager : MonoBehaviour
     void NextRound()
     {
         timerOn = false;
-        timeLeft = 6;
+        invisableTimer = 6;
 
         player1Missed = false;
         player2Missed = false;
@@ -131,7 +132,7 @@ public class CombatManager : MonoBehaviour
    void TimerHide()
     {
        
-        if (timeLeft <= 1)
+        if (invisableTimer <= 1)
         {
             TimerText.enabled = false;
         }
@@ -152,7 +153,7 @@ public class CombatManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.A))
                 {
                     player1Pressed = true;
-                    player1Time = timeLeft;
+                    player1Time = invisableTimer;
 
                 }
             }
@@ -162,7 +163,7 @@ public class CombatManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.J))
                 {
                     player2Pressed = true;
-                    player2Time = timeLeft;
+                    player2Time = invisableTimer;
 
                 }
             }
@@ -178,7 +179,7 @@ public class CombatManager : MonoBehaviour
      
         if (player1Pressed == true && player2Pressed == true)
         {
-            timeLeft = 0;
+            invisableTimer = 0;
   
            //  timerTextTest.SetActive(false);
 
@@ -202,7 +203,7 @@ public class CombatManager : MonoBehaviour
             }
         }
 
-        if (timeLeft == 0)
+        if (invisableTimer == 0)
         {
             if (player1Pressed == true && player2Pressed == false)
             {
@@ -280,14 +281,19 @@ public class CombatManager : MonoBehaviour
 
         if (timerOn)
         {
-            timeLeft -= Time.deltaTime;
+            invisableTimer -= Time.deltaTime;
+            visableTimer = invisableTimer / 2;
 
-            if (timeLeft <= 0)
+            if (invisableTimer <= 0)
             {
-                timeLeft = 0;
+                invisableTimer = 0;
                 timerOn = false;
             }
-            updateTimer(timeLeft);
+
+            visableTimer = invisableTimer / 2f;
+
+          //  updateTimer(invisableTimer);
+            updateTimer(visableTimer);
         }
         Player1TimeUI.text = player1Time.ToString(".00");
         Player2TimeUI.text = player2Time.ToString(".00");
