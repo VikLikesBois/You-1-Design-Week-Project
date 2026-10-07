@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,8 @@ public class CombatManager : MonoBehaviour
     public TextMeshProUGUI player1HealthText;
     public TextMeshProUGUI player2HealthText;
     public GameObject pressStart;
+    public TextMeshProUGUI PlayerWonMatch;
+    public GameObject PlayerWonMatchRemove;
 
     public GameObject roundText;
 
@@ -28,6 +31,7 @@ public class CombatManager : MonoBehaviour
     bool player2Pressed;
    public bool player1Missed = false;
    public bool player2Missed = false;
+    bool gameWon;
 
     public int player1Health = 3;
     public int player2Health = 3;
@@ -38,11 +42,10 @@ public class CombatManager : MonoBehaviour
 
     private void Start()
     {
-        
        
-        
     }
 
+    
     private void Update()
     {
 
@@ -51,6 +54,20 @@ public class CombatManager : MonoBehaviour
         WinCheck();
         TimerHide();
         HealthUpdate();
+    }
+
+    //Match cleanup after winning a match
+    void MatchCleanup()
+    {
+        player1Health = 3;
+        player2Health = 3;
+        player1Missed = false;
+        player2Missed = false;
+        player1Pressed = false;
+        player2Pressed = false;
+        TimerText.enabled = true;
+        timeLeft = 3;
+        
     }
     void NextRound()
     {
@@ -63,6 +80,7 @@ public class CombatManager : MonoBehaviour
         player2Pressed = false;
         pressStart.SetActive(true);
         gameStart = false;
+       
         
         TimerText.enabled = true;
         
@@ -73,11 +91,23 @@ public class CombatManager : MonoBehaviour
 
         if (player1Health == 0)
         {
-           
+            gameWon = true;
+            PlayerWonMatch.text = ("Player 1 Has ONE the Match!");
+
+            if (Input.GetKey(KeyCode.Space))
+            {
+                MatchCleanup();
+            }
         }
         else if (player2Health == 0)
         {
-           
+            gameWon = true;
+            PlayerWonMatch.text = ("Player 2 Has ONE the Match!");
+            
+            if (Input.GetKey(KeyCode.Space))
+            {
+                MatchCleanup();
+            }
         }
        
     }
@@ -223,12 +253,11 @@ public class CombatManager : MonoBehaviour
             gameStart = true;
             TimerText.enabled = true;
             pressStart.SetActive(false);
-
+            roundText.SetActive(false);
         }
 
 
         //timer
-
 
         if (timerOn)
         {
