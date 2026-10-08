@@ -49,8 +49,11 @@ public class CombatManager : MonoBehaviour
     public int player2Health = 3;
     public int roundCount = 0;
 
+
     public float minSpeed;
     public float maxSpeed;
+
+
 
     float player1Time;
     float player2Time;
