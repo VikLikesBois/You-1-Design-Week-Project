@@ -50,7 +50,7 @@ public class CombatManager : MonoBehaviour
     public int roundCount = 0;
 
 
-<<<<<<< HEAD
+
     public float minSpeed;
     public float maxSpeed;
 
@@ -59,8 +59,15 @@ public class CombatManager : MonoBehaviour
     float player1Time;
     float player2Time;
 
-=======
->>>>>>> parent of c0e1581 (add random timer)
+
+
+
+    public float minSpeed;
+    public float maxSpeed;
+
+(add random timer)
+
+
     //sound stuff
     SoundManager soundManager;
 
