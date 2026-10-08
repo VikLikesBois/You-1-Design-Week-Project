@@ -98,7 +98,6 @@ public class CombatManager : MonoBehaviour
     void NextRound()
     {
         timerOn = false;
-        invisableTimer = Random.Range(minSpeed, maxSpeed);
 
         player1Missed = false;
         player2Missed = false;
