@@ -66,7 +66,7 @@ public class CombatManager : MonoBehaviour
     public float minSpeed;
     public float maxSpeed;
 
-
+(add random timer)
 
 
 
