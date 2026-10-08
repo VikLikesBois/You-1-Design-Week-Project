@@ -895,6 +895,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1080456989}
   - component: {fileID: 1080456988}
+  - component: {fileID: 1080456990}
   m_Layer: 0
   m_Name: Combat Manager
   m_TagString: Untagged
@@ -950,6 +951,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1080456990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080456987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b5904f9e54252c489a8003499d77155, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SFXSource: {fileID: 0}
+  round_start: {fileID: 0}
+  punch: {fileID: 0}
+  game_win: {fileID: 0}
+  applaud1: {fileID: 0}
+  applaud2: {fileID: 0}
+  applaud3: {fileID: 0}
 --- !u!1 &1246691100
 GameObject:
   m_ObjectHideFlags: 0
