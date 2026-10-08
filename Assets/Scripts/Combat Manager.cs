@@ -43,9 +43,13 @@ public class CombatManager : MonoBehaviour
     float player1Time;
     float player2Time;
 
+    //sound stuff
+    SoundManager soundManager;
+
+
     private void Start()
     {
-        
+        soundManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<SoundManager>();
     }
 
     
@@ -190,6 +194,8 @@ public class CombatManager : MonoBehaviour
                 player1Health--;
                 roundTextTest.text = ($"Round {roundCount} Won by Player 2");
                 roundText.SetActive(true);
+                soundManager.PlaySFX(soundManager.punch);
+                soundManager.PlaySFX(soundManager.applaud1);
                 NextRound();
             }
 
@@ -199,6 +205,8 @@ public class CombatManager : MonoBehaviour
                 player2Health--;
                 roundTextTest.text = ($"Round {roundCount} Won by Player 1");
                 roundText.SetActive(true);
+                soundManager.PlaySFX(soundManager.punch);
+                soundManager.PlaySFX(soundManager.applaud1);
                 NextRound();
             }
         }
@@ -210,6 +218,8 @@ public class CombatManager : MonoBehaviour
                 player1Health--;
                 roundTextTest.text = ($"Round {roundCount} Won by Player 2");
                 roundText.SetActive(true);
+                soundManager.PlaySFX(soundManager.punch);
+                soundManager.PlaySFX(soundManager.applaud1);
                 NextRound();
             }
            
@@ -218,6 +228,8 @@ public class CombatManager : MonoBehaviour
                 player2Health--;
                 roundTextTest.text = ($"Round {roundCount} Won by Player 1");
                 roundText.SetActive(true);
+                soundManager.PlaySFX(soundManager.punch);
+                soundManager.PlaySFX(soundManager.applaud1);
                 NextRound();
             }
 
@@ -270,10 +282,11 @@ public class CombatManager : MonoBehaviour
             gameStart = true;
             TimerText.enabled = true;
             pressStart.SetActive(false);
-            
-            
-            
-           
+            soundManager.PlaySFX(soundManager.round_start);
+
+
+
+
         }
 
 
