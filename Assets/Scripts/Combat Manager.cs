@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,7 +7,8 @@ using UnityEngine.UIElements;
 public class CombatManager : MonoBehaviour
 {
     //timer stuff
-    public float timeLeft;
+    public float invisableTimer;
+    public float visableTimer;
     public bool timerOn = false;
     public TextMeshProUGUI TimerText;
     public GameObject timerTextTest;
@@ -16,36 +18,37 @@ public class CombatManager : MonoBehaviour
     public TextMeshProUGUI player1HealthText;
     public TextMeshProUGUI player2HealthText;
     public GameObject pressStart;
+ //   public TextMeshProUGUI pressStartObject;
+    public TextMeshProUGUI PlayerWonMatch;
+    public GameObject PlayerWonMatchRemove;
 
     public GameObject roundText;
+    public TextMeshProUGUI roundTextNumber;
 
     bool gameStart = false;
 
-    bool test;
+    
 
     //combat stuff
     bool player1Pressed;
     bool player2Pressed;
    public bool player1Missed = false;
    public bool player2Missed = false;
+    public bool gameWon;
 
     public int player1Health = 3;
     public int player2Health = 3;
-    public int roundCount = 1;
+    public int roundCount = 0;
 
     float player1Time;
     float player2Time;
 
-    //audio stuff
-    SoundManager soundManager;
-
     private void Start()
     {
-
-        soundManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<SoundManager>();
-
+        
     }
 
+    
     private void Update()
     {
 
@@ -54,18 +57,38 @@ public class CombatManager : MonoBehaviour
         WinCheck();
         TimerHide();
         HealthUpdate();
+        EndRound();
+    }
+
+    //Match cleanup after winning a match
+    void MatchCleanup()
+    {
+        roundCount = 0;
+        player1Health = 3;
+        player2Health = 3;
+        player1Missed = false;
+        player2Missed = false;
+        player1Pressed = false;
+        player2Pressed = false;
+        TimerText.enabled = true;
+        invisableTimer = 6;
+
+        PlayerWonMatchRemove.SetActive(false);
+        
     }
     void NextRound()
     {
         timerOn = false;
-        timeLeft = 3;
+        invisableTimer = 6;
 
         player1Missed = false;
         player2Missed = false;
         player1Pressed = false;
         player2Pressed = false;
         pressStart.SetActive(true);
+        
         gameStart = false;
+       
         
         TimerText.enabled = true;
         
@@ -76,11 +99,24 @@ public class CombatManager : MonoBehaviour
 
         if (player1Health == 0)
         {
-           
+            gameWon = true;
+            PlayerWonMatch.text = ("Player 1 Has ONE the Match!");
+            PlayerWonMatchRemove.SetActive(true);
+
+            if (Input.GetKey(KeyCode.Space))
+            {
+                MatchCleanup();
+            }
         }
-        else if (player2Health == 0)
+        if (player2Health == 0)
         {
-           
+            gameWon = true;
+            PlayerWonMatch.text = ("Player 2 Has ONE the Match!");
+            PlayerWonMatchRemove.SetActive(true);
+            if (Input.GetKey(KeyCode.Space))
+            {
+                MatchCleanup();
+            }
         }
        
     }
@@ -96,7 +132,7 @@ public class CombatManager : MonoBehaviour
    void TimerHide()
     {
        
-        if (timeLeft <= 1)
+        if (invisableTimer <= 1)
         {
             TimerText.enabled = false;
         }
@@ -117,7 +153,7 @@ public class CombatManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.A))
                 {
                     player1Pressed = true;
-                    player1Time = timeLeft;
+                    player1Time = invisableTimer;
 
                 }
             }
@@ -127,7 +163,7 @@ public class CombatManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.J))
                 {
                     player2Pressed = true;
-                    player2Time = timeLeft;
+                    player2Time = invisableTimer;
 
                 }
             }
@@ -143,7 +179,7 @@ public class CombatManager : MonoBehaviour
      
         if (player1Pressed == true && player2Pressed == true)
         {
-            timeLeft = 0;
+            invisableTimer = 0;
   
            //  timerTextTest.SetActive(false);
 
@@ -154,9 +190,6 @@ public class CombatManager : MonoBehaviour
                 player1Health--;
                 roundTextTest.text = ($"Round {roundCount} Won by Player 2");
                 roundText.SetActive(true);
-                soundManager.PlaySFX(soundManager.punch);
-                soundManager.PlaySFX(soundManager.applaud1);
-
                 NextRound();
             }
 
@@ -166,21 +199,17 @@ public class CombatManager : MonoBehaviour
                 player2Health--;
                 roundTextTest.text = ($"Round {roundCount} Won by Player 1");
                 roundText.SetActive(true);
-                soundManager.PlaySFX(soundManager.punch);
-                soundManager.PlaySFX(soundManager.applaud1);
                 NextRound();
             }
         }
 
-        if (timeLeft == 0)
+        if (invisableTimer == 0)
         {
             if (player1Pressed == true && player2Pressed == false)
             {
                 player1Health--;
                 roundTextTest.text = ($"Round {roundCount} Won by Player 2");
                 roundText.SetActive(true);
-                soundManager.PlaySFX(soundManager.punch);
-                soundManager.PlaySFX(soundManager.applaud1);
                 NextRound();
             }
            
@@ -189,8 +218,6 @@ public class CombatManager : MonoBehaviour
                 player2Health--;
                 roundTextTest.text = ($"Round {roundCount} Won by Player 1");
                 roundText.SetActive(true);
-                soundManager.PlaySFX(soundManager.punch);
-                soundManager.PlaySFX(soundManager.applaud1);
                 NextRound();
             }
 
@@ -231,28 +258,42 @@ public class CombatManager : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
+            if (gameStart == false)
+            {
+                roundCount += 1;
+                roundTextNumber.text = ($"Round: {roundCount}");
+                roundText.SetActive(false);
+            }
+
+
             timerOn = true;
             gameStart = true;
             TimerText.enabled = true;
             pressStart.SetActive(false);
-            soundManager.PlaySFX(soundManager.round_start);
-
+            
+            
+            
+           
         }
 
 
         //timer
 
-
         if (timerOn)
         {
-            timeLeft -= Time.deltaTime;
+            invisableTimer -= Time.deltaTime;
+            visableTimer = invisableTimer / 2;
 
-            if (timeLeft <= 0)
+            if (invisableTimer <= 0)
             {
-                timeLeft = 0;
+                invisableTimer = 0;
                 timerOn = false;
             }
-            updateTimer(timeLeft);
+
+            visableTimer = invisableTimer / 2f;
+
+          //  updateTimer(invisableTimer);
+            updateTimer(visableTimer);
         }
         Player1TimeUI.text = player1Time.ToString(".00");
         Player2TimeUI.text = player2Time.ToString(".00");
