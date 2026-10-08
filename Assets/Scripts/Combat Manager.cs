@@ -52,6 +52,9 @@ public class CombatManager : MonoBehaviour
     float player1Time;
     float player2Time;
 
+    public float minSpeed;
+    public float maxSpeed;
+
     //sound stuff
     //SoundManager soundManager;
 
@@ -92,7 +95,7 @@ public class CombatManager : MonoBehaviour
     void NextRound()
     {
         timerOn = false;
-        invisableTimer = 6;
+        invisableTimer = Random.Range(minSpeed, maxSpeed);
 
         player1Missed = false;
         player2Missed = false;
