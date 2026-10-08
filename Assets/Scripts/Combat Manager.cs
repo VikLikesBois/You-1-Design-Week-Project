@@ -153,7 +153,7 @@ public class CombatManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.A))
                 {
                     player1Pressed = true;
-                    player1Time = invisableTimer;
+                    player1Time = visableTimer;
 
                 }
             }
@@ -163,10 +163,12 @@ public class CombatManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.J))
                 {
                     player2Pressed = true;
-                    player2Time = invisableTimer;
+                    player2Time = visableTimer;
 
                 }
             }
+
+            
 
         }
     }
@@ -271,9 +273,7 @@ public class CombatManager : MonoBehaviour
             TimerText.enabled = true;
             pressStart.SetActive(false);
             
-            
-            
-           
+
         }
 
 
