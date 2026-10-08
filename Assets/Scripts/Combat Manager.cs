@@ -50,6 +50,7 @@ public class CombatManager : MonoBehaviour
     public int roundCount = 0;
 
 
+<<<<<<< HEAD
     public float minSpeed;
     public float maxSpeed;
 
@@ -58,6 +59,8 @@ public class CombatManager : MonoBehaviour
     float player1Time;
     float player2Time;
 
+=======
+>>>>>>> parent of c0e1581 (add random timer)
     //sound stuff
     SoundManager soundManager;
 
@@ -98,6 +101,7 @@ public class CombatManager : MonoBehaviour
     void NextRound()
     {
         timerOn = false;
+        invisableTimer = 6;
 
         player1Missed = false;
         player2Missed = false;
