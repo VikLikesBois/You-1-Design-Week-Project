@@ -60,10 +60,12 @@ public class CombatManager : MonoBehaviour
     float player2Time;
 
 
+
     public float minSpeed;
     public float maxSpeed;
 
 (add random timer)
+
     //sound stuff
     SoundManager soundManager;
 
