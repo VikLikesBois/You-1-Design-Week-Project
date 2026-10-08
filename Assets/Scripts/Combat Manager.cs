@@ -161,26 +161,30 @@ public class CombatManager : MonoBehaviour
         //punch controls for player 1
      if (gameStart == true)
         {
-            if (player1Pressed == false)
+            if (visableTimer <= 1)
             {
-                if (Input.GetKeyDown(KeyCode.A))
+                if (player1Pressed == false)
                 {
-                    player1Pressed = true;
-                    player1Time = invisableTimer;
+                    if (Input.GetKeyDown(KeyCode.A))
+                    {
+                        swapOrn("punch");
+                        player1Pressed = true;
+                        player1Time = invisableTimer;
 
+                    }
+                }
+                //punch controls for player 2
+                if (player2Pressed == false)
+                {
+                    if (Input.GetKeyDown(KeyCode.J))
+                    {
+                        swapCian("punch");
+                        player2Pressed = true;
+                        player2Time = invisableTimer;
+
+                    }
                 }
             }
-            //punch controls for player 2
-            if (player2Pressed == false)
-            {
-                if (Input.GetKeyDown(KeyCode.J))
-                {
-                    player2Pressed = true;
-                    player2Time = invisableTimer;
-
-                }
-            }
-
         }
     }
         
@@ -226,20 +230,24 @@ public class CombatManager : MonoBehaviour
 
         if (invisableTimer == 0)
         {
-            if (player1Pressed == true && player2Pressed == false)
+            if (player1Pressed == false && player2Pressed == true)
             {
                 player1Health--;
                 roundTextTest.text = ($"Round {roundCount} Won by Player 2");
+                swapOrn("hurt");
+                swapCian("punch");
                 roundText.SetActive(true);
                 //soundManager.PlaySFX(soundManager.punch);
                 //soundManager.PlaySFX(soundManager.applaud1);
                 NextRound();
             }
            
-            if (player1Pressed == false && player2Pressed == true)
+            else if (player1Pressed == true && player2Pressed == false)
             {
                 player2Health--;
                 roundTextTest.text = ($"Round {roundCount} Won by Player 1");
+                swapOrn("punch");
+                swapCian("hurt");
                 roundText.SetActive(true);
                 //soundManager.PlaySFX(soundManager.punch);
                 //soundManager.PlaySFX(soundManager.applaud1);
@@ -250,10 +258,13 @@ public class CombatManager : MonoBehaviour
 
 
 
-            if (player1Pressed == false && player2Pressed == false)
+            else if (player1Pressed == false && player2Pressed == false)
             {
+                swapOrn("hurt");
+                swapCian("hurt");
                 roundTextTest.text = ($"Round Stalemate");
                 roundText.SetActive(true);
+                NextRound();
             }
         }
         
