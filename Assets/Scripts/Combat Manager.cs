@@ -49,6 +49,9 @@ public class CombatManager : MonoBehaviour
     public int player2Health = 3;
     public int roundCount = 0;
 
+    public float minSpeed;
+    public float maxSpeed;
+
     float player1Time;
     float player2Time;
 
@@ -92,7 +95,7 @@ public class CombatManager : MonoBehaviour
     void NextRound()
     {
         timerOn = false;
-        invisableTimer = 6;
+        invisableTimer = Random.Range(minSpeed, maxSpeed);
 
         player1Missed = false;
         player2Missed = false;
