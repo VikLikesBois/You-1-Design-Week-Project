@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -25,6 +26,14 @@ public class CombatManager : MonoBehaviour
     public GameObject roundText;
     public TextMeshProUGUI roundTextNumber;
 
+    // i have no idea how to do aNYTHING
+    public GameObject ornStandby;
+    public GameObject ornPunch;
+    public GameObject ornHurt;
+    public GameObject cianStandby;
+    public GameObject cianPunch;
+    public GameObject cianHurt;
+
     bool gameStart = false;
 
     
@@ -44,12 +53,12 @@ public class CombatManager : MonoBehaviour
     float player2Time;
 
     //sound stuff
-    SoundManager soundManager;
+    //SoundManager soundManager;
 
 
     private void Start()
     {
-        soundManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<SoundManager>();
+        //soundManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<SoundManager>();
     }
 
     
@@ -95,7 +104,7 @@ public class CombatManager : MonoBehaviour
        
         
         TimerText.enabled = true;
-        
+
     }
 
     public void EndRound()
@@ -104,7 +113,7 @@ public class CombatManager : MonoBehaviour
         if (player1Health == 0)
         {
             gameWon = true;
-            PlayerWonMatch.text = ("Player 1 Has ONE the Match!");
+            PlayerWonMatch.text = ("YOU ONE! ->");
             PlayerWonMatchRemove.SetActive(true);
 
             if (Input.GetKey(KeyCode.Space))
@@ -115,7 +124,7 @@ public class CombatManager : MonoBehaviour
         if (player2Health == 0)
         {
             gameWon = true;
-            PlayerWonMatch.text = ("Player 2 Has ONE the Match!");
+            PlayerWonMatch.text = ("<- YOU ONE!");
             PlayerWonMatchRemove.SetActive(true);
             if (Input.GetKey(KeyCode.Space))
             {
@@ -192,10 +201,12 @@ public class CombatManager : MonoBehaviour
             if (player1Time > player2Time)
             {
                 player1Health--;
+                swapOrn("hurt");
+                swapCian("punch");
                 roundTextTest.text = ($"Round {roundCount} Won by Player 2");
                 roundText.SetActive(true);
-                soundManager.PlaySFX(soundManager.punch);
-                soundManager.PlaySFX(soundManager.applaud1);
+                //soundManager.PlaySFX(soundManager.punch);
+                //soundManager.PlaySFX(soundManager.applaud1);
                 NextRound();
             }
 
@@ -203,10 +214,12 @@ public class CombatManager : MonoBehaviour
             else if (player1Time < player2Time)
             {
                 player2Health--;
+                swapOrn("punch");
+                swapCian("hurt");
                 roundTextTest.text = ($"Round {roundCount} Won by Player 1");
                 roundText.SetActive(true);
-                soundManager.PlaySFX(soundManager.punch);
-                soundManager.PlaySFX(soundManager.applaud1);
+                //soundManager.PlaySFX(soundManager.punch);
+                //soundManager.PlaySFX(soundManager.applaud1);
                 NextRound();
             }
         }
@@ -218,8 +231,8 @@ public class CombatManager : MonoBehaviour
                 player1Health--;
                 roundTextTest.text = ($"Round {roundCount} Won by Player 2");
                 roundText.SetActive(true);
-                soundManager.PlaySFX(soundManager.punch);
-                soundManager.PlaySFX(soundManager.applaud1);
+                //soundManager.PlaySFX(soundManager.punch);
+                //soundManager.PlaySFX(soundManager.applaud1);
                 NextRound();
             }
            
@@ -228,8 +241,8 @@ public class CombatManager : MonoBehaviour
                 player2Health--;
                 roundTextTest.text = ($"Round {roundCount} Won by Player 1");
                 roundText.SetActive(true);
-                soundManager.PlaySFX(soundManager.punch);
-                soundManager.PlaySFX(soundManager.applaud1);
+                //soundManager.PlaySFX(soundManager.punch);
+                //soundManager.PlaySFX(soundManager.applaud1);
                 NextRound();
             }
 
@@ -275,6 +288,9 @@ public class CombatManager : MonoBehaviour
                 roundCount += 1;
                 roundTextNumber.text = ($"Round: {roundCount}");
                 roundText.SetActive(false);
+
+                swapOrn("standby");
+                swapCian("standby");
             }
 
 
@@ -282,7 +298,7 @@ public class CombatManager : MonoBehaviour
             gameStart = true;
             TimerText.enabled = true;
             pressStart.SetActive(false);
-            soundManager.PlaySFX(soundManager.round_start);
+            //soundManager.PlaySFX(soundManager.round_start);
 
 
 
@@ -312,6 +328,58 @@ public class CombatManager : MonoBehaviour
         Player2TimeUI.text = player2Time.ToString(".00");
 
        
+    }
+
+    void swapOrn(string spr)
+    {
+        switch (spr) {
+            case "standby":
+                ornStandby.SetActive(true);
+                ornPunch.SetActive(!true);
+                ornHurt.SetActive(!true);
+                break;
+            case "punch":
+                ornStandby.SetActive(!true);
+                ornPunch.SetActive(true);
+                ornHurt.SetActive(!true);
+                break;
+            case "hurt":
+                ornStandby.SetActive(!true);
+                ornPunch.SetActive(!true);
+                ornHurt.SetActive(true);
+                break;
+            default:
+                Debug.LogWarning("invalid sprite to swap to");
+                break;
+
+        };
+    }
+
+    void swapCian(string spr)
+    {
+        switch (spr)
+        {
+            case "standby":
+                cianStandby.SetActive(true);
+                cianPunch.SetActive(!true);
+                cianHurt.SetActive(!true);
+                break;
+            case "punch":
+                cianStandby.SetActive(!true);
+                cianPunch.SetActive(true);
+                cianHurt.SetActive(!true);
+                break;
+            case "hurt":
+                cianStandby.SetActive(!true);
+                cianPunch.SetActive(!true);
+                cianHurt.SetActive(true);
+                break;
+            default:
+                Debug.LogWarning("invalid sprite to swap to");
+                break;
+
+        }
+        ;
     }
 
 }
