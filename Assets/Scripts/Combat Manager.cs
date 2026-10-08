@@ -41,8 +41,6 @@ public class CombatManager : MonoBehaviour
     //combat stuff
     bool player1Pressed;
     bool player2Pressed;
-   public bool player1Missed = false;
-   public bool player2Missed = false;
     public bool gameWon;
 
     public int player1Health = 3;
@@ -82,8 +80,6 @@ public class CombatManager : MonoBehaviour
         roundCount = 0;
         player1Health = 3;
         player2Health = 3;
-        player1Missed = false;
-        player2Missed = false;
         player1Pressed = false;
         player2Pressed = false;
         TimerText.enabled = true;
@@ -97,8 +93,6 @@ public class CombatManager : MonoBehaviour
         timerOn = false;
         invisableTimer = Random.Range(minSpeed, maxSpeed);
 
-        player1Missed = false;
-        player2Missed = false;
         player1Pressed = false;
         player2Pressed = false;
         pressStart.SetActive(true);
@@ -263,7 +257,7 @@ public class CombatManager : MonoBehaviour
             }
         }
 
-        if (invisableTimer == 0)
+        else if (invisableTimer == 0)
         {
             if (player1Pressed == false && player2Pressed == true)
             {
