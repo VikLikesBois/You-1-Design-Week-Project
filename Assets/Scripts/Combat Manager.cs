@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 public class CombatManager : MonoBehaviour
 {
 
-    //hi this is a change to the code so that github recognizes a change so i can push to master
+    //code change hi i need to push to github master
 
     //timer stuff
     public float invisableTimer;
