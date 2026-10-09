@@ -57,12 +57,12 @@ public class CombatManager : MonoBehaviour
     float player2Time;
 
     //sound stuff
-    //SoundManager soundManager;
+    SoundManager soundManager;
 
 
     private void Start()
     {
-        //soundManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<SoundManager>();
+        soundManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<SoundManager>();
     }
 
     
@@ -213,8 +213,23 @@ public class CombatManager : MonoBehaviour
                 swapCian("punch");
                 roundTextTest.text = ($"Round {roundCount} Won by Player 2");
                 roundText.SetActive(true);
-                //soundManager.PlaySFX(soundManager.punch);
-                //soundManager.PlaySFX(soundManager.applaud1);
+                soundManager.PlaySFX(soundManager.punch);
+
+                int randomNumber = Random.Range(0, 3);
+
+                if (randomNumber == 0)
+                {
+                    soundManager.PlaySFX(soundManager.applaud1);
+                }
+                else if (randomNumber == 1)
+                {
+                    soundManager.PlaySFX(soundManager.applaud2);
+                }
+                else if (randomNumber == 2)
+                {
+                    soundManager.PlaySFX(soundManager.applaud3);
+                }
+
                 NextRound();
             }
 
@@ -226,8 +241,23 @@ public class CombatManager : MonoBehaviour
                 swapCian("hurt");
                 roundTextTest.text = ($"Round {roundCount} Won by Player 1");
                 roundText.SetActive(true);
-                //soundManager.PlaySFX(soundManager.punch);
-                //soundManager.PlaySFX(soundManager.applaud1);
+                soundManager.PlaySFX(soundManager.punch);
+
+                int randomNumber = Random.Range(0, 3);
+
+                if (randomNumber == 0)
+                {
+                    soundManager.PlaySFX(soundManager.applaud1);
+                }
+                else if (randomNumber == 1)
+                {
+                    soundManager.PlaySFX(soundManager.applaud2);
+                }
+                else if (randomNumber == 2)
+                {
+                    soundManager.PlaySFX(soundManager.applaud3);
+                }
+
                 NextRound();
             }
         }
@@ -241,8 +271,23 @@ public class CombatManager : MonoBehaviour
                 swapOrn("hurt");
                 swapCian("punch");
                 roundText.SetActive(true);
-                //soundManager.PlaySFX(soundManager.punch);
-                //soundManager.PlaySFX(soundManager.applaud1);
+                soundManager.PlaySFX(soundManager.punch);
+
+                int randomNumber = Random.Range(0, 3);
+
+                if (randomNumber == 0)
+                {
+                    soundManager.PlaySFX(soundManager.applaud1);
+                }
+                else if (randomNumber == 1)
+                {
+                    soundManager.PlaySFX(soundManager.applaud2);
+                }
+                else if (randomNumber == 2)
+                {
+                    soundManager.PlaySFX(soundManager.applaud3);
+                }
+
                 NextRound();
             }
            
@@ -253,8 +298,23 @@ public class CombatManager : MonoBehaviour
                 swapOrn("punch");
                 swapCian("hurt");
                 roundText.SetActive(true);
-                //soundManager.PlaySFX(soundManager.punch);
-                //soundManager.PlaySFX(soundManager.applaud1);
+                soundManager.PlaySFX(soundManager.punch);
+
+                int randomNumber = Random.Range(0, 3);
+
+                if (randomNumber == 0)
+                {
+                    soundManager.PlaySFX(soundManager.applaud1);
+                }
+                else if (randomNumber == 1)
+                {
+                    soundManager.PlaySFX(soundManager.applaud2);
+                }
+                else if (randomNumber == 2)
+                {
+                    soundManager.PlaySFX(soundManager.applaud3);
+                }
+
                 NextRound();
             }
 
@@ -313,7 +373,7 @@ public class CombatManager : MonoBehaviour
             gameStart = true;
             TimerText.enabled = true;
             pressStart.SetActive(false);
-            //soundManager.PlaySFX(soundManager.round_start);
+            soundManager.PlaySFX(soundManager.round_start);
 
 
 
