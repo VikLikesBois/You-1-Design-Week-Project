@@ -1124,6 +1124,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1080456989}
   - component: {fileID: 1080456988}
+  - component: {fileID: 1080456990}
   m_Layer: 0
   m_Name: Combat Manager
   m_TagString: Untagged
@@ -1170,6 +1171,8 @@ MonoBehaviour:
   player1Health: 3
   player2Health: 3
   roundCount: 0
+  maxSpeed: 6
+  minSpeed: 1
 --- !u!4 &1080456989
 Transform:
   m_ObjectHideFlags: 0
@@ -1185,8 +1188,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-
-
 --- !u!114 &1080456990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1293,8 +1294,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
-
-
 --- !u!1 &1246691100
 GameObject:
   m_ObjectHideFlags: 0
