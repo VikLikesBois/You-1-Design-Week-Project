@@ -49,6 +49,8 @@ public class CombatManager : MonoBehaviour
     bool gameStart = false;
 
     public GameObject tutorial;
+    public GameObject tutorial2;
+
    
 
     //combat stuff
@@ -94,6 +96,7 @@ public class CombatManager : MonoBehaviour
         {
             
             tutorial.SetActive(false);
+            tutorial2.SetActive(false);
         }
 
 
@@ -319,6 +322,14 @@ public class CombatManager : MonoBehaviour
 
                 NextRound();
             }
+            else
+            {
+                swapOrn("hurt");    
+                swapCian("hurt");
+                roundTextTest.text = ($"Round Stalemate");
+                roundText.SetActive(true);
+                NextRound();
+            }
         }
 
         else if (invisableTimer == 0)
@@ -379,22 +390,17 @@ public class CombatManager : MonoBehaviour
                 NextRound();
             }
 
-
-
+            
+            
 
 
             else if (player1Pressed == false && player2Pressed == false)
             {
-                if (player1Time != player2Time || player2Time != player1Time)
-                {
                     swapOrn("hurt");
                     swapCian("hurt");
                     roundTextTest.text = ($"Round Stalemate");
                     roundText.SetActive(true);
                     NextRound();
-                }
-
-                   
             }
              
         }
@@ -431,10 +437,16 @@ public class CombatManager : MonoBehaviour
                 roundTextNumber.text = ($"Round: {roundCount}");
                 Player1TimeUI.text = "0.000";
                 Player2TimeUI.text = "0.000";
+                player1Time = 0;
+                player2Time = 0;
+
+
+
                 roundText.SetActive(false);
 
                 swapOrn("standby");
                 swapCian("standby");
+
 
                 timerOn = true;
                 gameStart = true;
