@@ -385,12 +385,18 @@ public class CombatManager : MonoBehaviour
 
             else if (player1Pressed == false && player2Pressed == false)
             {
-                swapOrn("hurt");
-                swapCian("hurt");
-                roundTextTest.text = ($"Round Stalemate");
-                roundText.SetActive(true);
-                NextRound();
+                if (player1Time != player2Time || player2Time != player1Time)
+                {
+                    swapOrn("hurt");
+                    swapCian("hurt");
+                    roundTextTest.text = ($"Round Stalemate");
+                    roundText.SetActive(true);
+                    NextRound();
+                }
+
+                   
             }
+             
         }
         
        
