@@ -11,6 +11,7 @@ public class CombatManager : MonoBehaviour
     //code change hi i need to push to github master asiudhbasiduahbnsdaiusdbn
 
     //timer stuff
+    public float startingTime;
     public float invisableTimer;
     public float visableTimer;
     public bool timerOn = false;
@@ -37,6 +38,14 @@ public class CombatManager : MonoBehaviour
     public GameObject cianPunch;
     public GameObject cianHurt;
 
+    public GameObject ciFour;
+    public GameObject ciThree;
+    public GameObject ciTwo;
+    public GameObject ciOne;
+
+    public UnityEngine.UI.Image ornPointsFill;
+    public UnityEngine.UI.Image cianPointsFill;
+
     bool gameStart = false;
 
     
@@ -44,8 +53,6 @@ public class CombatManager : MonoBehaviour
     //combat stuff
     bool player1Pressed;
     bool player2Pressed;
-   public bool player1Missed = false;
-   public bool player2Missed = false;
     public bool gameWon;
 
     public int player1Health = 3;
@@ -90,12 +97,11 @@ public class CombatManager : MonoBehaviour
         roundCount = 0;
         player1Health = 3;
         player2Health = 3;
-        player1Missed = false;
-        player2Missed = false;
         player1Pressed = false;
         player2Pressed = false;
-        TimerText.enabled = true;
-        invisableTimer = 6;
+        TimerText.CrossFadeAlpha(1, 0.1f, true);
+        startingTime = Random.Range(minSpeed, maxSpeed);
+        invisableTimer = startingTime;
 
         PlayerWonMatchRemove.SetActive(false);
         
@@ -103,18 +109,17 @@ public class CombatManager : MonoBehaviour
     void NextRound()
     {
         timerOn = false;
-        invisableTimer = 6;
+        startingTime = Random.Range(minSpeed, maxSpeed);
+        invisableTimer = startingTime;
 
-        player1Missed = false;
-        player2Missed = false;
         player1Pressed = false;
         player2Pressed = false;
         pressStart.SetActive(true);
         
         gameStart = false;
-       
-        
-        TimerText.enabled = true;
+
+
+        TimerText.CrossFadeAlpha(1, 0.1f, true);
 
     }
 
@@ -148,6 +153,37 @@ public class CombatManager : MonoBehaviour
 
     void HealthUpdate()
     {
+        switch (player1Health)
+        {
+            case 3:
+                cianPointsFill.fillAmount = 0;
+                break;
+            case 2:
+                cianPointsFill.fillAmount = 0.35f;
+                break;
+            case 1:
+                cianPointsFill.fillAmount = 0.6f;
+                break;
+            case 0:
+                cianPointsFill.fillAmount = 1;
+                break;
+        }
+        switch (player2Health)
+        {
+            case 3:
+                ornPointsFill.fillAmount = 0;
+                break;
+            case 2:
+                ornPointsFill.fillAmount = 0.35f;
+                break;
+            case 1:
+                ornPointsFill.fillAmount = 0.6f;
+                break;
+            case 0:
+                ornPointsFill.fillAmount = 1;
+                break;
+        }
+
         player1HealthText.text = ($"{player1Health}");
         player2HealthText.text = ($"{player2Health}");
     }
@@ -158,7 +194,7 @@ public class CombatManager : MonoBehaviour
        
         if (invisableTimer <= 1)
         {
-            TimerText.enabled = false;
+            //TimerText.enabled = false;
         }
 
     }
@@ -271,7 +307,7 @@ public class CombatManager : MonoBehaviour
             }
         }
 
-        if (invisableTimer == 0)
+        else if (invisableTimer == 0)
         {
             if (player1Pressed == false && player2Pressed == true)
             {
@@ -358,7 +394,7 @@ public class CombatManager : MonoBehaviour
         
         //timer formating
         float seconds = Mathf.FloorToInt(currentTime);
-        int milliseconds = Mathf.FloorToInt((currentTime - seconds) * 100);
+        int milliseconds = Mathf.FloorToInt((currentTime - seconds) * 1000);
 
        TimerText.text = string.Format("{0:0}.{1:0}", seconds, milliseconds);
     }
@@ -373,22 +409,19 @@ public class CombatManager : MonoBehaviour
             {
                 roundCount += 1;
                 roundTextNumber.text = ($"Round: {roundCount}");
+                Player1TimeUI.text = "0.000";
+                Player2TimeUI.text = "0.000";
                 roundText.SetActive(false);
 
                 swapOrn("standby");
                 swapCian("standby");
+
+                timerOn = true;
+                gameStart = true;
+                TimerText.CrossFadeAlpha(0, startingTime/4*3, false);
+                pressStart.SetActive(false);
+                soundManager.PlaySFX(soundManager.round_start);
             }
-
-
-            timerOn = true;
-            gameStart = true;
-            TimerText.enabled = true;
-            pressStart.SetActive(false);
-            soundManager.PlaySFX(soundManager.round_start);
-
-
-
-
         }
 
 
@@ -397,7 +430,6 @@ public class CombatManager : MonoBehaviour
         if (timerOn)
         {
             invisableTimer -= Time.deltaTime;
-            visableTimer = invisableTimer / 2;
 
             if (invisableTimer <= 0)
             {
@@ -405,13 +437,49 @@ public class CombatManager : MonoBehaviour
                 timerOn = false;
             }
 
-            visableTimer = invisableTimer / 2f;
+            visableTimer = (invisableTimer/startingTime)*4;
 
-          //  updateTimer(invisableTimer);
-            updateTimer(visableTimer);
+            if (visableTimer >= 3)
+            {
+                ciFour.SetActive(true);
+                ciThree.SetActive(false);
+                ciTwo.SetActive(false);
+                ciOne.SetActive(false);
+            }
+            else if (visableTimer >= 2)
+            {
+                ciFour.SetActive(false);
+                ciThree.SetActive(true);
+                ciTwo.SetActive(false);
+                ciOne.SetActive(false);
+            }
+            else if (visableTimer >= 1)
+            {
+                ciFour.SetActive(false);
+                ciThree.SetActive(false);
+                ciTwo.SetActive(true);
+                ciOne.SetActive(false);
+            }
+            else if (visableTimer > 0)
+            {
+                ciFour.SetActive(false);
+                ciThree.SetActive(false);
+                ciTwo.SetActive(false);
+                ciOne.SetActive(true);
+            }
+            else
+            {
+                ciFour.SetActive(false);
+                ciThree.SetActive(false);
+                ciTwo.SetActive(false);
+                ciOne.SetActive(false);
+            }
+
+                //  updateTimer(invisableTimer);
+                updateTimer(visableTimer);
         }
-        Player1TimeUI.text = player1Time.ToString(".00");
-        Player2TimeUI.text = player2Time.ToString(".00");
+        Player1TimeUI.text = player1Time.ToString("0.000");
+        Player2TimeUI.text = player2Time.ToString("0.000");
 
        
     }
