@@ -78,6 +78,11 @@ public class CombatManager : MonoBehaviour
     private void Start()
     {
         soundManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<SoundManager>();
+        timerOn = false;
+        gameStart = false;
+
+        invisableTimer = startingTime;
+        visableTimer = 4f;
     }
 
     
@@ -404,7 +409,7 @@ public class CombatManager : MonoBehaviour
     {
 
 
-        if (Input.GetKeyUp(KeyCode.Space))
+        if  (Input.GetKeyUp(KeyCode.Space))
         {
             if (gameStart == false)
             {
@@ -428,7 +433,7 @@ public class CombatManager : MonoBehaviour
 
         //timer
 
-        if (timerOn)
+        if (timerOn && gameStart)
         {
             invisableTimer -= Time.deltaTime;
 
