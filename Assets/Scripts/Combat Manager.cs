@@ -48,7 +48,8 @@ public class CombatManager : MonoBehaviour
 
     bool gameStart = false;
 
-    
+    public GameObject tutorial;
+   
 
     //combat stuff
     bool player1Pressed;
@@ -88,6 +89,13 @@ public class CombatManager : MonoBehaviour
     
     private void Update()
     {
+        
+        if (Input.GetKey(KeyCode.Space))
+        {
+            
+            tutorial.SetActive(false);
+        }
+
 
         Timer();
         Combat();
@@ -411,7 +419,7 @@ public class CombatManager : MonoBehaviour
 
         if  (Input.GetKeyUp(KeyCode.Space))
         {
-            if (gameStart == false)
+            if (gameStart == false )
             {
                 roundCount += 1;
                 roundTextNumber.text = ($"Round: {roundCount}");
